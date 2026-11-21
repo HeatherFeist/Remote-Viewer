@@ -3,7 +3,7 @@ import type { Memorial, Memory, RoomMessage, ViewingRecord } from './types';
 const url = import.meta.env.VITE_SUPABASE_URL?.trim() ?? '';
 const key = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim() ?? '';
 export const supabase = url && key ? createClient(url, key) : null;
-export const canSync = Boolean(supabase);
+export const canSync = (): boolean => Boolean(supabase);
 export async function pullViewing(code: string): Promise<ViewingRecord | null> {
   if (!supabase) return null;
   const { data, error } = await supabase.rpc('read_viewing', { p_code: code });
